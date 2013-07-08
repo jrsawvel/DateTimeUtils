@@ -3,6 +3,23 @@ package DateTimeUtils;
 use strict;
 use Time::Local;
 
+sub create_database_datetime_stamp {
+    my $minutes_to_add = shift;
+
+    # creates string for DATETIME field in database as
+    # YYYY-MM-DD HH:MM:SS    (24 hour time)
+    # Date and time is GMT not local.
+
+    if ( !$minutes_to_add ) {
+        $minutes_to_add = 0;
+    }
+
+    my $epochsecs = time() + ($minutes_to_add * 60);
+    my ($sec, $min, $hr, $mday, $mon, $yr)  = (gmtime($epochsecs))[0,1,2,3,4,5];
+    my $datetime = sprintf "%04d-%02d-%02d %02d:%02d:%02d", 2000 + $yr-100, $mon+1, $mday, $hr, $min, $sec;
+    return $datetime;
+}
+
 
 # receives date string as: YYYY-MM-DD HH-MM-SS
 # date format used in database date field
@@ -251,41 +268,42 @@ sub _create_date_time_stamp {
         return %datetime; 
     } 
 
-    $format =~ s/yearfull/$datetime{'yearfull'}/g;
-    $format =~ s/0year/$datetime{'0year'}/g;
-    $format =~ s/year/$datetime{'year'}/g;
+    $format =~ s/\(yearminus1900\)/$datetime{'yearminus1900'}/g;
+    $format =~ s/\(yearfull\)/$datetime{'yearfull'}/g;
+    $format =~ s/\(0year\)/$datetime{'0year'}/g;
+    $format =~ s/\(year\)/$datetime{'year'}/g;
 
-    $format =~ s/monthfullname/$datetime{'monthfullname'}/g;
-    $format =~ s/monthname/$datetime{'monthname'}/g;
-    $format =~ s/0monthnum/$datetime{'0monthnum'}/g;
-    $format =~ s/monthnum/$datetime{'monthnum'}/g;
+    $format =~ s/\(monthfullname\)/$datetime{'monthfullname'}/g;
+    $format =~ s/\(monthname\)/$datetime{'monthname'}/g;
+    $format =~ s/\(0monthnum\)/$datetime{'0monthnum'}/g;
+    $format =~ s/\(monthnum\)/$datetime{'monthnum'}/g;
 
-    $format =~ s/dayfullname/$datetime{'dayfullname'}/g;
-    $format =~ s/dayname/$datetime{'dayname'}/g;
-    $format =~ s/0daynum/$datetime{'0daynum'}/g;
-    $format =~ s/daynum/$datetime{'daynum'}/g;
+    $format =~ s/\(dayfullname\)/$datetime{'dayfullname'}/g;
+    $format =~ s/\(dayname\)/$datetime{'dayname'}/g;
+    $format =~ s/\(0daynum\)/$datetime{'0daynum'}/g;
+    $format =~ s/\(daynum\)/$datetime{'daynum'}/g;
 
     $format =~ s/\(24hr\)/$datetime{'24hr'}/g;
     $format =~ s/\(012hr\)/$datetime{'012hr'}/g;
     $format =~ s/\(12hr\)/$datetime{'12hr'}/g;
 
-    $format =~ s/0min/$datetime{'0min'}/g;
-    $format =~ s/min/$datetime{'min'}/g;
+    $format =~ s/\(0min\)/$datetime{'0min'}/g;
+    $format =~ s/\(min\)/$datetime{'min'}/g;
 
-    $format =~ s/0sec/$datetime{'0sec'}/g;
-    $format =~ s/sec/$datetime{'sec'}/g;
+    $format =~ s/\(0sec\)/$datetime{'0sec'}/g;
+    $format =~ s/\(sec\)/$datetime{'sec'}/g;
 
-    $format =~ s/ap/$datetime{'ap'}/g;
-    $format =~ s/a\.p\./$datetime{'a.p.'}/g;
-    $format =~ s/AP/$datetime{'AP'}/g;
-    $format =~ s/A\.P\./$datetime{'A.P.'}/g;
+    $format =~ s/\(ap\)/$datetime{'ap'}/g;
+    $format =~ s/\(a\.p\.\)/$datetime{'a.p.'}/g;
+    $format =~ s/\(AP\)/$datetime{'AP'}/g;
+    $format =~ s/\(A\.P\.\)/$datetime{'A.P.'}/g;
 
-    $format =~ s/0offset:/$datetime{'0offset:'}/g;
-    $format =~ s/0offset/$datetime{'0offset'}/g;
-    $format =~ s/offset/$datetime{'offset'}/g;
+    $format =~ s/\(0offset:\)/$datetime{'0offset:'}/g;
+    $format =~ s/\(0offset\)/$datetime{'0offset'}/g;
+    $format =~ s/\(offset\)/$datetime{'offset'}/g;
 
-    $format =~ s/tz/$datetime{'tz'}/g;
-    $format =~ s/TZ/$datetime{'TZ'}/g;
+    $format =~ s/\(tz\)/$datetime{'tz'}/g;
+    $format =~ s/\(TZ\)/$datetime{'TZ'}/g;
 
     return $format;     
     
