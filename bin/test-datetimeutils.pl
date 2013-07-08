@@ -12,12 +12,12 @@ print  <<EOTEXT;
  year  (int)   (only year number like 13 for 2013);
  yearfull  (int) (will include century, so 2013);
  yearminus1900 (int) (will return 113 for 2013);
- mon  (int)
- 0mon   (int) (leading zero)
- monname (string)
- monfullname (string)
- day  (int)
- 0day  (int) (apply leading zero for single digit days)
+ monthnum  (int)
+ 0monthnum   (int) (leading zero)
+ monthname (string)
+ monthfullname (string)
+ daynum  (int)
+ 0daynum  (int) (apply leading zero for single digit days)
  dayname (string)
  dayfullname (string)
  12hr (int)
@@ -37,33 +37,33 @@ EOTEXT
 
 
 my $format = <<EOFORMAT;  
- year
- yearfull
- yearminus1900
- mon
- 0mon
- monname
- monfullname
- day
- 0day
- dayname
- dayfullname
+ (year)
+ (yearfull)
+ (yearminus1900)
+ (monthnum)
+ (0monthnum)
+ (monthname)
+ (monthfullname)
+ (daynum)
+ (0daynum)
+ (dayname)
+ (dayfullname)
  (12hr)
  (012hr)
  (24hr)
- min
- 0min
- sec
- 0sec
- ap
- a.p.
- AP
- A.P.
- offset
- 0offset
- 0offset:
- tz
- TZ
+ (min)
+ (0min)
+ (sec)
+ (0sec)
+ (ap)
+ (a.p.)
+ (AP)
+ (A.P.)
+ (offset)
+ (0offset)
+ (0offset:)
+ (tz)
+ (TZ)
 
 EOFORMAT
 
